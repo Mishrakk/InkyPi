@@ -1,0 +1,84 @@
+.mpk-poznan-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Layout for time header */
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.time-info p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.time-valid p {
+  text-align: right;
+  font-weight: 500;
+}
+
+/* Stop section */
+.stop-info {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+/* Route grid */
+.routes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.route {
+  background: #f8f9fb;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.route h2 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.line-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.line-table__hours {
+  width: 42px;
+  padding: 4px 6px;
+  text-align: right;
+  font-weight: 700;
+}
+
+.line-table__minutes {
+  padding: 0.3rem 0.5rem;
+  text-align: left;
+}
+
+.line-table tr:nth-child(odd) {
+  background: #eef1f7;
+}
+
+.line-table__details {
+  display: inline-block;
+  margin-right: 0.65rem;
+}

@@ -1,0 +1,20 @@
+<div class="form-group">
+  <div class="form-group nowrap">
+    <label for="title" class="form-label">Title</label>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      placeholder="Type something..."
+      class="form-input"
+    />
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (loadPluginSettings) {
+      document.getElementById("title").value = pluginSettings.title || "";
+    }
+  });
+</script>

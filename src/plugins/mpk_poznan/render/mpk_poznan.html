@@ -1,0 +1,45 @@
+{% extends "plugin.html" %} {% block content %}
+<div class="mpk-poznan-container">
+  <div class="time-info">
+    <div class="time-current">
+      <p>
+        {{ current_time.time }} {{ current_time.day_of_week_translated }} {{
+        current_time.date }}
+      </p>
+    </div>
+    <div class="time-valid">
+      <p>Ważny od {{ feed_info.valid_from }} do {{ feed_info.valid_to }}</p>
+    </div>
+  </div>
+
+  <div class="stop-info">
+    <p>Przystanek {{ stop_info.stop_name }} ({{ stop_info.stop_code }})</p>
+  </div>
+
+  <div class="routes">
+    {% for route_id, route_info in routes_info.items() %}
+    <div class="route">
+      <h2>
+        Linia {{ route_info["route_short_name"] }} - {{ route_info["headsign"]
+        }}
+      </h2>
+      <table class="line-table">
+        <tbody>
+          {% set current_hour = current_time.time.split(':')[0] | int %} {% for
+          hour in range(current_hour, current_hour + 3) %}
+          <tr>
+            <td class="line-table__hours">{{ hour % 24 }}</td>
+            <td class="line-table__minutes">
+              {% for minutes in route_info["stop_times"].get(hour % 24, []) %}
+              <span class="line-table__details">{{ minutes }}</span>
+              {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
