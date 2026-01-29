@@ -30,6 +30,8 @@ from blueprints.settings import settings_bp
 from blueprints.plugin import plugin_bp
 from blueprints.playlist import playlist_bp
 from blueprints.apikeys import apikeys_bp
+from buttons import ButtonManager
+from buttons.buttons_blueprint import setup_button_handlers, buttons_bp
 from jinja2 import ChoiceLoader, FileSystemLoader
 from plugins.plugin_registry import load_plugins
 from waitress import serve
@@ -80,14 +82,24 @@ app.register_blueprint(settings_bp)
 app.register_blueprint(plugin_bp)
 app.register_blueprint(playlist_bp)
 app.register_blueprint(apikeys_bp)
+app.register_blueprint(buttons_bp)
 
 # Register opener for HEIF/HEIC images
 register_heif_opener()
 
 if __name__ == '__main__':
 
+    # Create button manager
+    # Set enabled=False to disable in development/testing
+    button_manager = ButtonManager(enabled=not DEV_MODE)
+    app.config["BUTTON_MANAGER"] = button_manager
+
     # start the background refresh task
     refresh_task.start()
+
+    # Setup and start button handlers
+    setup_button_handlers(button_manager, refresh_task, device_config)
+    button_manager.start()
 
     # display default inkypi image on startup
     if device_config.get_config("startup") is True:
@@ -114,4 +126,6 @@ if __name__ == '__main__':
 
         serve(app, host="0.0.0.0", port=PORT, threads=1)
     finally:
+        if button_manager:
+            button_manager.stop()
         refresh_task.stop()
